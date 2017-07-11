@@ -2,7 +2,6 @@ require('isomorphic-fetch');
 
 const conf = require('../lib/const.js');
 const exec = require('../lib/execPromise.js');
-const Promise = require('es6-promise');
 const qs = require('qs');
 
 const TOKEN_SERVICE_ERROR = "Token swap service did not return a successful response code.";
@@ -34,13 +33,13 @@ function initSession(clientId, authData) {
 
 module.exports = {
     authenticate: function (options) {
-        if (!options.urlScheme || !options.clientId || !options.scopes ||
+        if (!options.redirectUrl || !options.clientId || !options.scopes ||
             !options.tokenSwapUrl || !options.tokenRefreshUrl) {
-            return Promise.reject(MISSING_PARAMETERS_ERROR);
+            return Promise.reject(conf.MISSING_PARAMETERS_ERROR);
         }
 
         return exec('authenticate', [
-            options.urlScheme,
+            options.redirectUrl,
             options.clientId,
             options.scopes
         ])

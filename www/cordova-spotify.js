@@ -2,7 +2,6 @@ const EventEmitter = require('./lib/EventEmitter.js');
 const conf = require('./lib/const.js');
 const exec = require('./lib/execPromise.js');
 const platform = require('./platforms');
-const Promise = require('es6-promise');
 
 class Session extends EventEmitter {
     constructor(sessionObject) {

@@ -25,6 +25,9 @@ NSDictionary *sessionToDict(SPTSession* session) {
 
     [SPTAuth defaultInstance].sessionUserDefaultsKey = @"CordovaSpotifySession";
 
+    // Tell iOS to play audio even in background and when the ringer is silent
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+
     // Initialize delegates for event handling
     __weak id <CDVCommandDelegate> _commandDelegate = self.commandDelegate;
     self.audioStreamingDelegate = [AudioStreamingDelegate eventEmitterWithCommandDelegate: _commandDelegate];
@@ -36,7 +39,7 @@ NSDictionary *sessionToDict(SPTSession* session) {
 }
 
 - (void) authenticate:(CDVInvokedUrlCommand*)command {
-    NSString* urlScheme = [command.arguments objectAtIndex:0];
+    NSString* redirectUrl = [command.arguments objectAtIndex:0];
     NSString* clientId  = [command.arguments objectAtIndex:1];
     NSArray* scopes     = [command.arguments objectAtIndex:2];
 
@@ -50,7 +53,7 @@ NSDictionary *sessionToDict(SPTSession* session) {
 
     SPTAuth* auth = [SPTAuth defaultInstance];
     auth.clientID = clientId;
-    auth.redirectURL = [NSURL URLWithString: [NSString stringWithFormat:@"%@://callback", urlScheme]];
+    auth.redirectURL = [NSURL URLWithString: redirectUrl];
     auth.requestedScopes = scopes;
 
     if ([command.arguments count] >= 5 &&
