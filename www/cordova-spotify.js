@@ -13,6 +13,14 @@ class Session extends EventEmitter {
         Object.assign(this, sessionObject);
     }
 
+    getMetadata() {
+        return exec('getMetadata');
+    }
+
+    getPlaybackState() {
+        return exec('getPlaybackState');
+    }
+
     getPosition() {
         return exec('getPosition');
     }
@@ -21,12 +29,32 @@ class Session extends EventEmitter {
         return exec('logout');
     }
 
-    play(trackUri) {
-        return exec('play', [trackUri]);
+    play(trackUri, indexInContext, position) {
+        return exec('play', [trackUri, indexInContext, position]);
     }
 
     pause() {
         return exec('pause');
+    }
+
+    skipToNext() {
+        return exec('skipToNext');
+    }
+
+    skipToPrevious() {
+        return exec('skipToPrevious');
+    }
+
+    seekToPosition(positionInMs) {
+        return exec('seekToPosition', [positionInMs]);
+    }
+
+    setShuffle(enabled) {
+        return exec('setShuffle', [enabled]);
+    }
+
+    setRepeat(enabled) {
+        return exec('setRepeat', [enabled]);
     }
 }
 
@@ -46,4 +74,8 @@ exports.authenticate = function (options) {
 exports.login = function (options) {
     return platform.login(options)
         .then(authData => authData ? initSession(authData) : null);
-}
+};
+
+exports.logout = function (options) {
+    return platform.login(options);
+};

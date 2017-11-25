@@ -41,7 +41,8 @@ module.exports = {
         return exec('authenticate', [
             options.redirectUrl,
             options.clientId,
-            options.scopes
+            options.scopes,
+            options.showDialog
         ])
             .then(res => fetch(options.tokenSwapUrl, {
                 body: qs.stringify({ code: res.code }),

@@ -2,10 +2,6 @@
   "name": "cordova-spotify",
   "version": "0.4.0",
   "description": "Spotify SDK bindings for Cordova Applications",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Festify/cordova-spotify.git"
-  },
   "engines": {
     "cordovaDependencies": {
       "0.2.2": {
